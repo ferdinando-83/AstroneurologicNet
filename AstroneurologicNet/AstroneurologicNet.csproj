@@ -39,12 +39,18 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="DataLayer\Entity.cs" />
+        <Compile Include="DataLayer\HearingData.cs" />
+        <Compile Include="DataLayer\SightData.cs" />
+        <Compile Include="DataLayer\SmellData.cs" />
+        <Compile Include="DataLayer\TasteData.cs" />
+        <Compile Include="DataLayer\TouchData.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="DataLayer" />
       <Folder Include="LogicLayer" />
+      <Folder Include="PresentationLayer" />
       <Folder Include="Utility" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

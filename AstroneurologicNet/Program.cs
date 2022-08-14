@@ -1,30 +1,30 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using AstroneurologicNet.DataLayer;
 
 namespace AstroneurologicNet {
     internal static class Program {
         public static void Main(string[] args) {
-            const int       totalSamples = 10000;
-            const double    learningRate = 0.001;
+            const int       totalSamples = 1000;
+            const double    learningRate = .01;
 
             #region Sample Data
-            var random = new Random();
-            var data = (
+            var seed = new Random();
+            var sightDataSet = (
                 from i in Enumerable.Range(0, totalSamples)
-                let red = random.Next(255)
-                let green = random.Next(255)
-                let blue = random.Next(255)
+                let color = new SightData(seed).ColorData
                 select new {
-                    red,
-                    green,
-                    blue,
-                    desiredOutput = red > 126 && green < 126 && blue < 126 ? 1 : 0
+                    red           = color.Red,
+                    green         = color.Green,
+                    blue          = color.Blue,
+                    desiredOutput = color.Red > 126 && color.Green < 126 && color.Blue < 126 ? 1 : 0
                 }).ToArray();
             #endregion
 
             const int trainingCount = totalSamples * 8 / 10; // 80% Training
-            var       trainingSet   = data.Take(trainingCount);
-            var       testingSet    = data.Skip(trainingCount);
+            var       trainingSet   = sightDataSet.Take(trainingCount);
+            var       testingSet    = sightDataSet.Skip(trainingCount);
 
             var sleepingNeuron = new SleepingNeuron();
             var wakingNeuron   = new WakingNeuron(sleepingNeuron);
@@ -43,7 +43,7 @@ namespace AstroneurologicNet {
             ).ToArray();
             
             // Log
-            foreach (var sample in data) {
+            foreach (var sample in sightDataSet) {
                 Console.Write(
                     "Sample Data \n {0} \n\n",
                     sample);
